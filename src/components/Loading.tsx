@@ -11,8 +11,8 @@ const Loading = ({ percent }: { percent: number }) => {
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
-    let timer1: NodeJS.Timeout;
-    let timer2: NodeJS.Timeout;
+    let timer1: ReturnType<typeof setTimeout>;
+    let timer2: ReturnType<typeof setTimeout>;
 
     if (percent >= 100) {
       timer1 = setTimeout(() => {
@@ -30,8 +30,8 @@ const Loading = ({ percent }: { percent: number }) => {
   }, [percent]);
 
   useEffect(() => {
-    let timer1: NodeJS.Timeout;
-    let timer2: NodeJS.Timeout;
+    let timer1: ReturnType<typeof setTimeout>;
+    let timer2: ReturnType<typeof setTimeout>;
 
     if (isLoaded) {
       timer1 = setTimeout(() => {
@@ -109,7 +109,7 @@ export default Loading;
 
 export const setProgress = (setLoading: (value: number) => void) => {
   let percent: number = 0;
-  let interval: NodeJS.Timeout;
+  let interval: ReturnType<typeof setInterval>;
 
   interval = setInterval(() => {
     if (percent <= 50) {
