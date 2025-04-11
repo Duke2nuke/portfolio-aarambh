@@ -1,24 +1,47 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
-import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
-interface ParaElement extends HTMLElement {
-  split: SplitText;
-}
+const splitTextIntoLines = (element: HTMLElement): HTMLElement[] => {
+  const text = element.innerHTML;
+  element.innerHTML = '';
+  
+  const words = text.trim().split(/\s+/);
+  const lines: HTMLElement[] = [];
+  let currentLine = document.createElement('span');
+  currentLine.classList.add('split-line');
+  
+  words.forEach((word) => {
+    const wordSpan = document.createElement('span');
+    wordSpan.style.display = 'inline-block';
+    wordSpan.innerHTML = word + ' ';
+    currentLine.appendChild(wordSpan);
+    
+    if (currentLine.offsetWidth > element.offsetWidth) {
+      currentLine.removeChild(wordSpan);
+      lines.push(currentLine);
+      currentLine = document.createElement('span');
+      currentLine.classList.add('split-line');
+      currentLine.appendChild(wordSpan);
+    }
+  });
+  
+  if (currentLine.hasChildNodes()) {
+    lines.push(currentLine);
+  }
+  
+  lines.forEach(line => element.appendChild(line));
+  return lines;
+};
 
 export const splitText = () => {
-  const paras = gsap.utils.toArray<ParaElement>(".para");
+  const paras = gsap.utils.toArray<HTMLElement>(".para");
 
   paras.forEach((para) => {
-    para.split = new SplitText(para, {
-      type: "lines",
-      linesClass: "split-line",
-    });
+    const lines = splitTextIntoLines(para);
 
-    gsap.from(para.split.lines, {
+    gsap.from(lines, {
       scrollTrigger: {
         trigger: para,
         start: "top 80%",

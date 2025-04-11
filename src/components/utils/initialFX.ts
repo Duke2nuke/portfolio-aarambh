@@ -1,21 +1,24 @@
 import { gsap } from "gsap";
-import { SplitText } from "gsap/SplitText";
-import { smoother } from "../Navbar";
 
-gsap.registerPlugin(SplitText);
+const splitTextIntoChars = (element: Element): HTMLElement[] => {
+  const text = element.textContent || '';
+  element.textContent = '';
+  
+  return text.split('').map(char => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    span.style.display = 'inline-block';
+    element.appendChild(span);
+    return span;
+  });
+};
 
 export const initialFX = () => {
   const tl = gsap.timeline();
+  const titleElement = document.querySelector(".landing-title");
   
-  // Check if elements exist before animating
-  const landingTitle = document.querySelector(".landing-title");
-  const landingPara = document.querySelector(".landing-para");
-  const landingCircle1 = document.querySelector(".landing-circle1");
-  const landingCircle2 = document.querySelector(".landing-circle2");
-
-  if (landingTitle) {
-    const splitText = new SplitText(".landing-title", { type: "chars" });
-    const chars = splitText.chars;
+  if (titleElement) {
+    const chars = splitTextIntoChars(titleElement);
 
     tl.from(chars, {
       y: 100,
@@ -24,11 +27,8 @@ export const initialFX = () => {
       stagger: 0.02,
       duration: 1,
       ease: "power4.out",
-    });
-  }
-
-  if (landingPara) {
-    tl.from(
+    })
+    .from(
       ".landing-para",
       {
         y: 50,
@@ -37,11 +37,8 @@ export const initialFX = () => {
         ease: "power4.out",
       },
       "-=0.5"
-    );
-  }
-
-  if (landingCircle1) {
-    tl.from(
+    )
+    .from(
       ".landing-circle1",
       {
         scale: 0,
@@ -50,11 +47,8 @@ export const initialFX = () => {
         ease: "power4.out",
       },
       "-=1"
-    );
-  }
-
-  if (landingCircle2) {
-    tl.from(
+    )
+    .from(
       ".landing-circle2",
       {
         scale: 0,
@@ -64,14 +58,5 @@ export const initialFX = () => {
       },
       "-=0.8"
     );
-  }
-
-  if (smoother) {
-    if (landingCircle1) {
-      smoother.effects(".landing-circle1", { speed: 0.8 });
-    }
-    if (landingCircle2) {
-      smoother.effects(".landing-circle2", { speed: 1.2 });
-    }
   }
 };

@@ -4,22 +4,14 @@
   position: relative;
   overflow: hidden;
   background-color: var(--backgroundColor);
-  transition: opacity 0.5s ease-in-out;
 }
 
-#smooth-wrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
-}
-
-#smooth-content {
+.content-wrapper {
   width: 100%;
   position: relative;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .main-body {
@@ -29,4 +21,9 @@
 
 .main-body.main-active {
   opacity: 1;
+}
+
+/* Add smooth scrolling to the html element */
+html {
+  scroll-behavior: smooth;
 } 

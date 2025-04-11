@@ -2,27 +2,43 @@ import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
 import "./styles/Navbar.css";
 
-gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-export let smoother: ScrollSmoother;
+gsap.registerPlugin(ScrollTrigger);
 
 const Navbar = () => {
   useEffect(() => {
-    smoother = ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1.7,
-      speed: 1.7,
-      effects: true,
-      autoResize: true,
-      ignoreMobileResize: true,
-    });
+    // Initialize smooth scrolling
+    const smoothScroll = (target: string) => {
+      const element = document.querySelector(target);
+      if (!element) return;
+      
+      const targetPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      const duration = 1000;
+      let start: number | null = null;
+      
+      const animation = (currentTime: number) => {
+        if (start === null) start = currentTime;
+        const timeElapsed = currentTime - start;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        const ease = (t: number) => t < 0.5 
+          ? 4 * t * t * t 
+          : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+        
+        window.scrollTo(0, startPosition + distance * ease(progress));
+        
+        if (timeElapsed < duration) {
+          requestAnimationFrame(animation);
+        }
+      };
+      
+      requestAnimationFrame(animation);
+    };
 
-    smoother.scrollTop(0);
-    smoother.paused(true);
-
+    // Set up click handlers for navigation links
     let links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
       let element = elem as HTMLAnchorElement;
@@ -30,15 +46,26 @@ const Navbar = () => {
         if (window.innerWidth > 1024) {
           e.preventDefault();
           let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
+          let section = elem.getAttribute("href");
+          if (section) {
+            smoothScroll(section);
+          }
         }
       });
     });
+
+    // Refresh ScrollTrigger on resize
     window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
+      ScrollTrigger.refresh();
     });
+
+    return () => {
+      window.removeEventListener("resize", () => {
+        ScrollTrigger.refresh();
+      });
+    };
   }, []);
+
   return (
     <div className="navbar">
       <div className="nav-container">
