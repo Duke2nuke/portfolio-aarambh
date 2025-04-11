@@ -10,8 +10,8 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Email</h4>
             <p>
-              <a href="mailto:Duke3nuke4109@gmail.com" data-cursor="disable">
-                Duke3nuke4109@gmail.com
+              <a href="mailto:duke2nuke4109@gmail.com" data-cursor="disable">
+                duke2nuke4109@gmail.com
               </a>
             </p>
             <h4>Phone</h4>
@@ -26,6 +26,7 @@ const Contact = () => {
             <a
               href="https://github.com/aarambh-dev"
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
@@ -34,6 +35,7 @@ const Contact = () => {
             <a
               href="https://www.linkedin.com/in/aarambh"
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
@@ -42,14 +44,16 @@ const Contact = () => {
             <a
               href="https://x.com/aarambh__"
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
               Twitter <MdArrowOutward />
             </a>
             <a
-              href="https://www.instagram.com/whyucare_huh?igsh=MTJlc2h1cm1sYXYzYw%3D%3D&utm_source=qr"
+              href="https://www.instagram.com/whyucare_huh"
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
@@ -58,7 +62,7 @@ const Contact = () => {
           </div>
           <div className="contact-box">
             <h2>
-              Designed and Developed <br /> by <span>Aarambh</span>
+              Designed and Developed <br /> by <span>Aarambh Maan Shrestha</span>
             </h2>
             <h5>
               <MdCopyright /> {new Date().getFullYear()}

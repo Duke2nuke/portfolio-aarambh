@@ -6,13 +6,12 @@ const About = () => {
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
-  I’m Aarambh — a curious mind turning caffeine into code ☕💻.  
-  Currently diving deep into AI, Web3, and full-stack development.  
-  I'm part of <strong>100xDevs</strong>, building projects that matter and prepping for GSoC 2025 🚀.
-  <br /><br />
-  Whether it's decentralizing education, building AI tools, or just shipping cool side projects — I'm all about learning, building, and sharing.
-</p>
-
+          I'm Aarambh Maan Shrestha — a passionate full-stack developer with a keen interest in creating innovative web solutions. 
+          Currently focused on building modern web applications using React, Node.js, and Three.js.
+          <br /><br />
+          I love creating interactive and visually appealing user experiences, and I'm always exploring new technologies to enhance my skills.
+          When I'm not coding, you can find me contributing to open-source projects or working on personal creative endeavors.
+        </p>
       </div>
     </div>
   );
