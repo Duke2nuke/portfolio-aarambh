@@ -40,41 +40,34 @@ const Navbar = () => {
     });
   }, []);
   return (
-    <>
-      <div className="header">
-        <a href="/#" className="navbar-title" data-cursor="disable">
-          Logo
-        </a>
-        <a
-          href="mailto:example@mail.com"
-          className="navbar-connect"
-          data-cursor="disable"
-        >
-          example@mail.com
-        </a>
-        <ul>
-          <li>
-            <a data-href="#about" href="#about">
-              <HoverLinks text="ABOUT" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#work" href="#work">
-              <HoverLinks text="WORK" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#contact" href="#contact">
-              <HoverLinks text="CONTACT" />
-            </a>
-          </li>
-        </ul>
+    <div className="navbar">
+      <div className="nav-container">
+        <div className="nav-flex">
+          <div className="nav-logo">
+            <h2>Aarambh</h2>
+          </div>
+          <div className="nav-links">
+            <ul>
+              <li>
+                <a href="#about">
+                  <HoverLinks text="ABOUT" />
+                </a>
+              </li>
+              <li>
+                <a href="#work">
+                  <HoverLinks text="WORK" />
+                </a>
+              </li>
+              <li>
+                <a href="#contact">
+                  <HoverLinks text="CONTACT" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-
-      <div className="landing-circle1"></div>
-      <div className="landing-circle2"></div>
-      <div className="nav-fade"></div>
-    </>
+    </div>
   );
 };
 
