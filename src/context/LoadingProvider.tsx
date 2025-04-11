@@ -24,12 +24,20 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     setIsLoading,
     setLoading,
   };
-  useEffect(() => {}, [loading]);
+
+  useEffect(() => {
+    // Set a timeout to ensure loading screen doesn't get stuck
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 10000); // 10 seconds timeout
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <LoadingContext.Provider value={value as LoadingType}>
       {isLoading && <Loading percent={loading} />}
-      <main className="main-body">{children}</main>
+      <main className={`main-body ${!isLoading ? 'main-active' : ''}`}>{children}</main>
     </LoadingContext.Provider>
   );
 };
