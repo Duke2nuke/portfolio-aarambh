@@ -3,15 +3,30 @@
   min-height: 100vh;
   position: relative;
   overflow: hidden;
+  background-color: var(--backgroundColor);
+  transition: opacity 0.5s ease-in-out;
 }
 
 #smooth-wrapper {
   position: relative;
   width: 100%;
   overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
 }
 
 #smooth-content {
   width: 100%;
   position: relative;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.main-body {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.main-body.main-active {
+  opacity: 1;
 } 

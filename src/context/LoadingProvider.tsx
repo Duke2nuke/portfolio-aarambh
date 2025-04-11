@@ -18,6 +18,7 @@ export const LoadingContext = createContext<LoadingType | null>(null);
 export const LoadingProvider = ({ children }: PropsWithChildren) => {
   const [isLoading, setIsLoading] = useState(true);
   const [loading, setLoading] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   const value = {
     isLoading,
@@ -34,10 +35,28 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     return () => clearTimeout(timeout);
   }, []);
 
+  useEffect(() => {
+    if (!isLoading) {
+      // Add a small delay before showing content to ensure smooth transition
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
+
   return (
     <LoadingContext.Provider value={value as LoadingType}>
       {isLoading && <Loading percent={loading} />}
-      <main className={`main-body ${!isLoading ? 'main-active' : ''}`}>{children}</main>
+      <main 
+        className={`main-body ${!isLoading ? 'main-active' : ''}`}
+        style={{ 
+          opacity: isVisible ? 1 : 0,
+          transition: 'opacity 0.5s ease-in-out'
+        }}
+      >
+        {children}
+      </main>
     </LoadingContext.Provider>
   );
 };

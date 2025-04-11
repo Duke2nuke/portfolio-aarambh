@@ -11,27 +11,41 @@ const Loading = ({ percent }: { percent: number }) => {
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
+    let timer1: NodeJS.Timeout;
+    let timer2: NodeJS.Timeout;
+
     if (percent >= 100) {
-      const timer = setTimeout(() => {
+      timer1 = setTimeout(() => {
         setLoaded(true);
-        setTimeout(() => {
+        timer2 = setTimeout(() => {
           setIsLoaded(true);
         }, 1000);
       }, 600);
-      return () => clearTimeout(timer);
     }
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
   }, [percent]);
 
   useEffect(() => {
+    let timer1: NodeJS.Timeout;
+    let timer2: NodeJS.Timeout;
+
     if (isLoaded) {
-      const timer = setTimeout(() => {
+      timer1 = setTimeout(() => {
         setClicked(true);
-        setTimeout(() => {
+        timer2 = setTimeout(() => {
           setIsLoading(false);
         }, 900);
       }, 1000);
-      return () => clearTimeout(timer);
     }
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
   }, [isLoaded, setIsLoading]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
@@ -95,8 +109,9 @@ export default Loading;
 
 export const setProgress = (setLoading: (value: number) => void) => {
   let percent: number = 0;
+  let interval: NodeJS.Timeout;
 
-  let interval = setInterval(() => {
+  interval = setInterval(() => {
     if (percent <= 50) {
       let rand = Math.round(Math.random() * 5);
       percent = percent + rand;
