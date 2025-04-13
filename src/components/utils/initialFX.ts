@@ -1,10 +1,39 @@
-import { SplitText } from "gsap-trial/SplitText";
 import gsap from "gsap";
-import { smoother } from "../Navbar";
+
+interface SplitTextResult {
+  chars: HTMLElement[];
+  lines: HTMLElement[];
+}
+
+function createSplitText(selector: string | string[], options: { type: string; linesClass?: string }): SplitTextResult {
+  const elements = typeof selector === 'string' ? document.querySelectorAll(selector) : 
+    selector.flatMap(sel => Array.from(document.querySelectorAll(sel)));
+  
+  const chars: HTMLElement[] = [];
+  const lines: HTMLElement[] = [];
+  
+  elements.forEach((element) => {
+    const text = element.textContent || '';
+    element.textContent = '';
+    
+    const line = document.createElement('div');
+    line.className = options.linesClass || '';
+    element.appendChild(line);
+    lines.push(line);
+    
+    text.split('').forEach((char) => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      line.appendChild(span);
+      chars.push(span);
+    });
+  });
+  
+  return { chars, lines };
+}
 
 export function initialFX() {
   document.body.style.overflowY = "auto";
-  smoother.paused(false);
   document.getElementsByTagName("main")[0].classList.add("main-active");
   gsap.to("body", {
     backgroundColor: "#0b080c",
@@ -12,7 +41,7 @@ export function initialFX() {
     delay: 1,
   });
 
-  var landingText = new SplitText(
+  var landingText = createSplitText(
     [".landing-info h3", ".landing-intro h2", ".landing-intro h1"],
     {
       type: "chars,lines",
@@ -35,7 +64,7 @@ export function initialFX() {
 
   let TextProps = { type: "chars,lines", linesClass: "split-h2" };
 
-  var landingText2 = new SplitText(".landing-h2-info", TextProps);
+  var landingText2 = createSplitText(".landing-h2-info", TextProps);
   gsap.fromTo(
     landingText2.chars,
     { opacity: 0, y: 80, filter: "blur(5px)" },
@@ -72,15 +101,15 @@ export function initialFX() {
     }
   );
 
-  var landingText3 = new SplitText(".landing-h2-info-1", TextProps);
-  var landingText4 = new SplitText(".landing-h2-1", TextProps);
-  var landingText5 = new SplitText(".landing-h2-2", TextProps);
+  var landingText3 = createSplitText(".landing-h2-info-1", TextProps);
+  var landingText4 = createSplitText(".landing-h2-1", TextProps);
+  var landingText5 = createSplitText(".landing-h2-2", TextProps);
 
   LoopText(landingText2, landingText3);
   LoopText(landingText4, landingText5);
 }
 
-function LoopText(Text1: SplitText, Text2: SplitText) {
+function LoopText(Text1: SplitTextResult, Text2: SplitTextResult) {
   var tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
   const delay = 4;
   const delay2 = delay * 2 + 1;
