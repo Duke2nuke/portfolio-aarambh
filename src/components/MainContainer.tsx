@@ -8,7 +8,8 @@ import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
-import { splitText } from "./utils/splitText";
+import splitText from "./utils/splitText";
+
 import "./styles/MainContainer.css";
 
 const TechStack = lazy(() => import("./TechStack"));
