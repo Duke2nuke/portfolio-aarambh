@@ -1,0 +1,29 @@
+.container-main {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--backgroundColor);
+}
+
+.content-wrapper {
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.main-body {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.main-body.main-active {
+  opacity: 1;
+}
+
+/* Add smooth scrolling to the html element */
+html {
+  scroll-behavior: smooth;
+} 
